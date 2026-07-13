@@ -1,3 +1,8 @@
+
+const document = { getElementById: (id) => ({ id, style: {}, classList: { add:()=>{}, remove:()=>{} }, addEventListener: ()=>{}, innerHTML: '' }), addEventListener: ()=>{} };
+const window = { localStorage: { getItem: () => null, setItem: () => {} }, innerWidth: 1000, addEventListener: ()=>{} };
+const localStorage = window.localStorage;
+
 // ===================================================================
 //  ROULETTE STRATEGY AI — Analysis Engine (REAL-TIME VERSION)
 //  Data disimpan di localStorage, bisa ditambah secara live.
@@ -2811,3 +2816,14 @@ window.addEventListener('resize', () => {
         // renderColumnChart();
     }, 200);
 });
+
+
+RESULTS = [17, 17, 17, 18, 18, 4, 15, 15, 15, 15];
+try {
+    refreshAll();
+    console.log("Live Signals HTML:");
+    console.log(document.getElementById('live-signals-content').innerHTML);
+    console.log("Success");
+} catch(e) {
+    console.error("Error:", e);
+}
