@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette Strategy AI | Skema Kemenangan</title>
+    <meta name="description" content="Dashboard analisis strategi roulette dengan AI. Temukan pola, hot/cold numbers, dan rekomendasi taruhan.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="strategy.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-effects">
+        <div class="orb orb-red"></div>
+        <div class="orb orb-green"></div>
+        <div class="orb orb-blue"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <div class="app">
+        <!-- Header -->
+        <header class="header glass">
+            <div class="header-left">
+                <div class="logo-icon"><i class="fa-solid fa-bullseye"></i></div>
+                <div>
+                    <h1>Roulette Strategy <span class="neon">AI</span></h1>
+                    <p class="subtitle" id="subtitle-text">Analisis <span id="header-count">0</span> hasil &bull; Skema Kemenangan Personal</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- REAL-TIME INPUT PANEL -->
+        <section class="input-panel glass" id="input-panel">
+            <div class="input-panel-header">
+                <h2><i class="fa-solid fa-gamepad"></i> Input Realtime</h2>
+                <p class="input-hint">Klik angka yang keluar, atau ketik manual. Data otomatis tersimpan.</p>
+            </div>
+
+            <!-- Quick number input -->
+            <div class="input-row">
+                <div class="manual-input-group">
+                    <input type="number" id="manual-num" min="0" max="36" placeholder="0–36" class="manual-input">
+                    <button class="btn btn-primary btn-add" id="btn-add-manual" onclick="addManualNumber()">
+                        <i class="fa-solid fa-plus"></i> Tambah
+                    </button>
+                </div>
+                <div class="input-actions">
+                    <button class="btn btn-ghost btn-sm" onclick="undoLast()" title="Hapus angka terakhir">
+                        <i class="fa-solid fa-rotate-left"></i> Undo
+                    </button>
+                    <button class="btn btn-ghost btn-sm btn-danger" onclick="clearAllData()" title="Hapus semua data">
+                        <i class="fa-solid fa-trash"></i> Hapus Semua
+                    </button>
+                    <button class="btn btn-ghost btn-sm" onclick="exportData()" title="Export data ke clipboard">
+                        <i class="fa-solid fa-download"></i> Export
+                    </button>
+                    <button class="btn btn-ghost btn-sm" onclick="showImportModal()" title="Import data">
+                        <i class="fa-solid fa-upload"></i> Import
+                    </button>
+                </div>
+            </div>
+
+            <!-- Roulette Number Pad -->
+            <div class="roulette-numpad">
+                <button class="np-btn np-green" onclick="addNumber(0)">0</button>
+                <div class="np-grid">
+                    <button class="np-btn np-red" onclick="addNumber(1)">1</button>
+                    <button class="np-btn np-black" onclick="addNumber(2)">2</button>
+                    <button class="np-btn np-red" onclick="addNumber(3)">3</button>
+                    <button class="np-btn np-black" onclick="addNumber(4)">4</button>
+                    <button class="np-btn np-red" onclick="addNumber(5)">5</button>
+                    <button class="np-btn np-black" onclick="addNumber(6)">6</button>
+                    <button class="np-btn np-red" onclick="addNumber(7)">7</button>
+                    <button class="np-btn np-black" onclick="addNumber(8)">8</button>
+                    <button class="np-btn np-red" onclick="addNumber(9)">9</button>
+                    <button class="np-btn np-black" onclick="addNumber(10)">10</button>
+                    <button class="np-btn np-black" onclick="addNumber(11)">11</button>
+                    <button class="np-btn np-red" onclick="addNumber(12)">12</button>
+                    <button class="np-btn np-black" onclick="addNumber(13)">13</button>
+                    <button class="np-btn np-red" onclick="addNumber(14)">14</button>
+                    <button class="np-btn np-black" onclick="addNumber(15)">15</button>
+                    <button class="np-btn np-red" onclick="addNumber(16)">16</button>
+                    <button class="np-btn np-black" onclick="addNumber(17)">17</button>
+                    <button class="np-btn np-red" onclick="addNumber(18)">18</button>
+                    <button class="np-btn np-red" onclick="addNumber(19)">19</button>
+                    <button class="np-btn np-black" onclick="addNumber(20)">20</button>
+                    <button class="np-btn np-red" onclick="addNumber(21)">21</button>
+                    <button class="np-btn np-black" onclick="addNumber(22)">22</button>
+                    <button class="np-btn np-red" onclick="addNumber(23)">23</button>
+                    <button class="np-btn np-black" onclick="addNumber(24)">24</button>
+                    <button class="np-btn np-red" onclick="addNumber(25)">25</button>
+                    <button class="np-btn np-black" onclick="addNumber(26)">26</button>
+                    <button class="np-btn np-red" onclick="addNumber(27)">27</button>
+                    <button class="np-btn np-black" onclick="addNumber(28)">28</button>
+                    <button class="np-btn np-black" onclick="addNumber(29)">29</button>
+                    <button class="np-btn np-red" onclick="addNumber(30)">30</button>
+                    <button class="np-btn np-black" onclick="addNumber(31)">31</button>
+                    <button class="np-btn np-red" onclick="addNumber(32)">32</button>
+                    <button class="np-btn np-black" onclick="addNumber(33)">33</button>
+                    <button class="np-btn np-red" onclick="addNumber(34)">34</button>
+                    <button class="np-btn np-black" onclick="addNumber(35)">35</button>
+                    <button class="np-btn np-red" onclick="addNumber(36)">36</button>
+                </div>
+            </div>
+
+            <!-- Recent Entries -->
+            <div class="recent-section">
+                <h3 class="section-label"><i class="fa-solid fa-clock-rotate-left"></i> 10 Angka Terakhir</h3>
+                <div id="recent-numbers" class="recent-row"></div>
+            </div>
+        </section>
+
+        <!-- MINI TRACKER MURNI (DOZEN BETS) -->
+        <section class="mini-tracker glass" id="mini-tracker-murni" style="margin-top: 0.5rem; padding: 0.8rem 1.5rem; border: 1px solid rgba(255, 171, 0, 0.3);">
+            <div id="mini-tracker-murni-content">
+                <span class="input-hint">Belum ada histori Sinyal Murni (Masukkan angka).</span>
+            </div>
+        </section>
+
+        <!-- LIVE SIGNALS INDICATOR -->
+        <section class="live-signals glass" id="live-signals" style="margin-top: 0.5rem; padding: 0.8rem 1.5rem; border: 1px solid rgba(255, 171, 0, 0.3);">
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase;"><i class="fa-solid fa-satellite-dish" style="color: #ffab00;"></i> Live Signal Bet</div>
+            <div id="live-signals-content" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                <span class="input-hint">Belum ada sinyal aktif.</span>
+            </div>
+        </section>
+
+        <!-- ANGKA JITU (HEDGE & STRIKE) -->
+        <section class="angka-jitu glass" id="angka-jitu" style="margin-top: 0.5rem; padding: 0.8rem 1.5rem; border: 1px solid rgba(224, 64, 251, 0.3); background: rgba(224, 64, 251, 0.05);">
+            <div style="font-size: 0.75rem; font-weight: 600; color: #e040fb; margin-bottom: 8px; text-transform: uppercase;"><i class="fa-solid fa-crosshairs"></i> Angka Jitu (Irisan Ekor & Dozen)</div>
+            <div id="angka-jitu-content" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <span class="input-hint">Menunggu persilangan sinyal Dozen & Ekor...</span>
+            </div>
+            <div id="mini-tracker-jitu" style="margin-top: 10px; border-top: 1px solid rgba(224, 64, 251, 0.2); padding-top: 8px;">
+                <!-- Mini tracker Jitu akan dirender di sini -->
+            </div>
+        </section>
+
+        <!-- Import Modal (hidden by default) -->
+        <div class="modal-overlay hidden" id="import-modal">
+            <div class="modal glass">
+                <h3><i class="fa-solid fa-upload"></i> Import Data</h3>
+                <p class="input-hint">Masukkan angka dipisahkan koma, spasi, atau baris baru.<br>Contoh: <code>11, 24, 30, 36, 9</code></p>
+                <textarea id="import-textarea" rows="6" placeholder="11, 24, 30, 36, 9, 16, 28..."></textarea>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="importData()"><i class="fa-solid fa-check"></i> Import</button>
+                    <button class="btn btn-ghost" onclick="hideImportModal()"><i class="fa-solid fa-xmark"></i> Batal</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ★ PREDIKSI TARUHAN BERIKUTNYA (HERO) ★ -->
+        <section class="prediction-hero glass" id="prediction-hero">
+            <div class="pred-header">
+                <div class="pred-title-row">
+                    <div class="pred-icon pulse-glow"><i class="fa-solid fa-crosshairs"></i></div>
+                    <div>
+                        <h2>Prediksi Taruhan Berikutnya</h2>
+                        <p class="input-hint">Gabungan 6 metode analisis &bull; Diperbarui setiap input</p>
+                    </div>
+                </div>
+                <div class="confidence-badge" id="confidence-badge">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span id="confidence-text">—</span>
+                </div>
+            </div>
+            <div class="pred-body">
+                <!-- Top Predicted Numbers -->
+                <div class="pred-numbers-section">
+                    <h3 class="section-label"><i class="fa-solid fa-fire"></i> TARGET ANGKA AGRESIF (Pola Ekor)</h3>
+                    <div id="pred-top-numbers" class="pred-numbers-row"></div>
+                </div>
+                <!-- Ekor Warna -->
+                <div class="pred-numbers-section" style="margin-top: 15px;">
+                    <h3 class="section-label" style="color: #00e676;"><i class="fa-solid fa-fire-flame-curved"></i> TARGET EKOR WARNA (Hitam & Merah)</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 8px;">
+                        <div id="container-ekor-hitam" style="flex: 1; background: rgba(0, 0, 0, 0.4); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;">
+                            <h4 id="title-ekor-hitam" style="margin: 0 0 10px 0; font-size: 0.9rem; color: #fff;"><i class="fa-solid fa-circle" style="color:#222; border:1px solid #666; border-radius:50%;"></i> Ekor Hitam</h4>
+                            <div id="pred-ekor-hitam" class="pred-numbers-row" style="justify-content: flex-start; flex-wrap: wrap;"></div>
+                        </div>
+                        <div id="container-ekor-merah" style="flex: 1; background: rgba(255, 0, 0, 0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,50,50,0.3); transition: all 0.3s ease;">
+                            <h4 id="title-ekor-merah" style="margin: 0 0 10px 0; font-size: 0.9rem; color: #ff5252;"><i class="fa-solid fa-circle" style="color:#ff3333;"></i> Ekor Merah</h4>
+                            <div id="pred-ekor-merah" class="pred-numbers-row" style="justify-content: flex-start; flex-wrap: wrap;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ekor Ganjil Genap -->
+                <div class="pred-numbers-section" style="margin-top: 15px;">
+                    <h3 class="section-label" style="color: #00b0ff;"><i class="fa-solid fa-yin-yang"></i> TARGET EKOR GANJIL GENAP</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 8px;">
+                        <div id="container-ekor-ganjil" style="flex: 1; background: rgba(0, 176, 255, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,176,255,0.2); transition: all 0.3s ease;">
+                            <h4 id="title-ekor-ganjil" style="margin: 0 0 10px 0; font-size: 0.9rem; color: #00b0ff;">Ekor Ganjil (Odd)</h4>
+                            <div id="pred-ekor-ganjil" class="pred-numbers-row" style="justify-content: flex-start; flex-wrap: wrap;"></div>
+                        </div>
+                        <div id="container-ekor-genap" style="flex: 1; background: rgba(255, 171, 0, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,171,0,0.2); transition: all 0.3s ease;">
+                            <h4 id="title-ekor-genap" style="margin: 0 0 10px 0; font-size: 0.9rem; color: #ffab00;">Ekor Genap (Even)</h4>
+                            <div id="pred-ekor-genap" class="pred-numbers-row" style="justify-content: flex-start; flex-wrap: wrap;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ekor Besar Kecil -->
+                <div class="pred-numbers-section" style="margin-top: 15px;">
+                    <h3 class="section-label" style="color: #e040fb;"><i class="fa-solid fa-arrows-up-down"></i> TARGET EKOR BESAR KECIL</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 8px;">
+                        <div id="container-ekor-besar" style="flex: 1; background: rgba(224, 64, 251, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(224,64,251,0.2); transition: all 0.3s ease;">
+                            <h4 id="title-ekor-besar" style="margin: 0 0 10px 0; font-size: 0.9rem; color: #e040fb;">Ekor Besar (19-36)</h4>
+                            <div id="pred-ekor-besar" class="pred-numbers-row" style="justify-content: flex-start; flex-wrap: wrap;"></div>
+                        </div>
+                        <div id="container-ekor-kecil" style="flex: 1; background: rgba(0, 230, 118, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,230,118,0.2); transition: all 0.3s ease;">
+                            <h4 id="title-ekor-kecil" style="margin: 0 0 10px 0; font-size: 0.9rem; color: #00e676;">Ekor Kecil (1-18)</h4>
+                            <div id="pred-ekor-kecil" class="pred-numbers-row" style="justify-content: flex-start; flex-wrap: wrap;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TARGET SINYAL MURNI -->
+                <div class="pred-numbers-section" style="margin-top: 25px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 15px;">
+                    <h3 class="section-label" style="color: #ffab00;"><i class="fa-solid fa-satellite-dish"></i> TARGET SINYAL MURNI (Outside Bets 50/50)</h3>
+                    <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap;">
+                        <div id="container-murni-warna" style="flex: 1; min-width: 250px; background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; display: none;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 0.9rem; color: #fff;"><i class="fa-solid fa-palette"></i> Sinyal Warna</h4>
+                            <div id="murni-target-warna" style="font-size: 1.2rem; font-weight: bold;">-</div>
+                        </div>
+                        <div id="container-murni-oe" style="flex: 1; min-width: 250px; background: rgba(0, 176, 255, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,176,255,0.2); transition: all 0.3s ease; display: none;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 0.9rem; color: #00b0ff;"><i class="fa-solid fa-yin-yang"></i> Sinyal Ganjil/Genap</h4>
+                            <div id="murni-target-oe" style="font-size: 1.2rem; font-weight: bold; color: #00b0ff;">-</div>
+                        </div>
+                        <div id="container-murni-hl" style="flex: 1; min-width: 250px; background: rgba(224, 64, 251, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(224,64,251,0.2); transition: all 0.3s ease; display: none;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 0.9rem; color: #e040fb;"><i class="fa-solid fa-arrows-up-down"></i> Sinyal Besar/Kecil</h4>
+                            <div id="murni-target-hl" style="font-size: 1.2rem; font-weight: bold; color: #e040fb;">-</div>
+                        </div>
+                        <div id="container-murni-dozen" style="flex: 1; min-width: 250px; background: rgba(0, 230, 118, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(0,230,118,0.2); transition: all 0.3s ease; display: none;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 0.9rem; color: #00e676;"><i class="fa-solid fa-layer-group"></i> Sinyal Double Dozen</h4>
+                            <div id="murni-target-dozen" style="font-size: 1.2rem; font-weight: bold; color: #00e676;">-</div>
+                        </div>
+                        <div id="murni-empty-state" style="width: 100%; padding: 15px; text-align: center; color: var(--text-dim); background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            Menunggu sinyal aktif...
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!-- Suggested Bets -->
+                <div class="pred-bets-section">
+                    <h3 class="section-label"><i class="fa-solid fa-bullseye"></i> SARAN TARUHAN CERDAS</h3>
+                    <div id="pred-smart-bets" class="pred-bets-grid"></div>
+                </div>
+            </div>
+            <!-- Method Breakdown -->
+            <div class="pred-methods" id="pred-methods"></div>
+        </section>
+
+        <!-- ★ PREDICTION ACCURACY TRACKER ★ -->
+        <section class="tracker-section glass" id="tracker-section">
+            <div class="tracker-header">
+                <h2><i class="fa-solid fa-satellite-dish"></i> Live Tracker: Akurasi AI</h2>
+                <div class="tracker-stats">
+                    <div class="stat-badge">Medium: <span id="track-medium-rate">0%</span></div>
+                    <div class="stat-badge">Agresif: <span id="track-agresif-rate">0%</span></div>
+                </div>
+            </div>
+            <div class="tracker-log-container">
+                <table class="tracker-table">
+                    <thead>
+                        <tr>
+                            <th>Putaran</th>
+                            <th>Angka</th>
+                            <th>Prediksi Medium</th>
+                            <th>Prediksi Agresif</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tracker-log-body">
+                        <!-- Tracker logs will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
+
+            <!-- Streak Detection -->
+            <section class="card glass full-width" id="streak-section">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-bolt"></i> Deteksi Streak (Pola Beruntun)</h2>
+                </div>
+                <div id="streak-grid" class="streak-grid"></div>
+            </section>
+
+            <!-- AI Recommendations (UPGRADED) -->
+            <section class="card glass full-width highlight-card" id="ai-section">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-brain"></i> Strategi & Rekomendasi AI</h2>
+                </div>
+                <div id="ai-recommendations" class="recommendations-grid"></div>
+            </section>
+
+            <!-- Data Grid: all 153 numbers -->
+            <section class="card glass full-width" id="data-section">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-table-cells"></i> Semua Data (<span id="data-count">0</span> Hasil)</h2>
+                    <button class="btn btn-ghost" onclick="copyAllData()"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+                <div id="data-grid" class="data-number-grid"></div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer glass">
+            <p>&copy; 2026 Roulette Strategy AI &bull; Personal Tool &bull; Dibangun dengan <i class="fa-solid fa-heart" style="color:#ff2a55"></i></p>
+        </footer>
+    </div>
+
+    <script src="strategy.js"></script>
+</body>
+</html>
